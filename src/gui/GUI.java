@@ -137,7 +137,7 @@ public class GUI extends JPanel{
 	}
 	
 	
-	public static void main(String args[]){
+	public static void main(String[] args){
 		GUI sim;
 		try {
 			sim = startSimulation();

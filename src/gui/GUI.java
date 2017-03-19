@@ -3,14 +3,20 @@ package gui;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Queue;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import predict.Function;
 
 @SuppressWarnings("serial")
 public class GUI extends JPanel{
@@ -31,12 +37,16 @@ public class GUI extends JPanel{
 	private final static Color FOOTPRINT_COLOR = Color.green;
 	private final static int FOOTPRINT_LENGTH = 500;
 	private final static Color PREDICTION_COLOR = Color.red;
+	private final static Color LEGEND_COLOR = Color.white;
 	
 	// update variables
 	private static LinkedList<Point> QUEUE = new LinkedList<Point>();
 	private static Point DOT = new Point(0,0);
 	private static double ORIENTATION = 0;
 	private static ArrayList<Point> PREDICTION = new ArrayList<Point>();
+
+	// misc. variables
+	private static int index = 1;
 	
 	@Override
 	protected void paintComponent(Graphics g){
@@ -46,6 +56,22 @@ public class GUI extends JPanel{
 		drawFootprints(g);
 		drawPrediction(g);
 		drawTicks(g);
+		drawLegend(g);
+	}
+
+	private void drawLegend(Graphics g) {
+		g.setColor(LEGEND_COLOR);
+		// set font
+		Font font = new Font("Helvetica", Font.BOLD, 20);
+		g.setFont(font);
+		FontMetrics metr = getFontMetrics(font);
+
+		//set message
+		String s = "Setting X: 10*time + [7]*sin(time/[8]) + [9]*cos(time/[0])";
+		String s1 = "Setting Y: 10*time + [2]*sin(time/[3]) + [4]*cos(time/[5])";
+
+		g.drawString(s, 10, HEIGHT - font.getSize()*4);
+		g.drawString(s1, 10, HEIGHT - font.getSize()*2);
 	}
 
 	private void drawTicks(Graphics g) {
@@ -119,6 +145,7 @@ public class GUI extends JPanel{
 		window.setTitle("magical kalman filter"); 
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
+		window.addKeyListener(new ArrowAdapter());
 		
 		// initialize game
 		GUI simu = new GUI(window);
@@ -135,6 +162,63 @@ public class GUI extends JPanel{
 		PREDICTION = prediction;
 		this.repaint();
 	}
+
+	private static class ArrowAdapter extends KeyAdapter {
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+
+            int key = e.getKeyCode();
+
+            if (key == KeyEvent.VK_2) {
+                index = 1;
+            }
+
+            if (key == KeyEvent.VK_3) {
+                index = 2;
+            }
+
+            if (key == KeyEvent.VK_4) {
+                index = 3;
+            }
+
+            if (key == KeyEvent.VK_5) {
+                index = 4;
+            }
+
+            if (key == KeyEvent.VK_7) {
+                index = 6;
+            }
+
+            if (key == KeyEvent.VK_8) {
+                index = 7;
+            }
+
+            if (key == KeyEvent.VK_9) {
+                index = 8;
+            }
+
+            if (key == KeyEvent.VK_0) {
+                index = 9;
+            }
+
+            if (key == KeyEvent.VK_LEFT) {
+                Function.update(index, -10);
+            }
+
+            if (key == KeyEvent.VK_RIGHT) {
+                Function.update(index, 10);
+            }
+
+            if (key == KeyEvent.VK_DOWN) {
+                Function.update(index, -1);
+            }
+
+            if (key == KeyEvent.VK_UP) {
+                Function.update(index, 1);
+            }
+        }
+    }
 	
 	
 	public static void main(String[] args){

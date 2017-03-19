@@ -34,7 +34,7 @@ while True:
 
 	outputString = ""
 	for x,y in zip(px,py):
-		outputString = outputString + str(x) + "," + str(y) + ";" 
+		outputString = outputString + str(x[0][0]) + "," + str(y[0][0]) + ";" 
 	outputString = outputString + "\n"
 	print(outputString)
-	soc.send(outputString).encode()
+	soc.send(outputString.encode("ascii"))

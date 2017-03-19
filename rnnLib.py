@@ -22,20 +22,23 @@ class rnn(object):
         self.mby = np.zeros_like(self.by) 
 
     def long_predict(self, inputs):
+        print( "starting long_prediction")
         iterations = 10
+        oldLen = len(inputs)
+
         xs, hs, outputs = {}, {}, {}
         
-        hprev = np.zeros((self.hiddenSize,1))
-        oldLen = len(inputs)
-        hs[-1] = hprev
-        for index in (range(oldLen * iterations)):
+        hs[-1] = np.zeros((self.hiddenSize,1))
+        for index in (range(oldLen + iterations)):
+            print(index)
+            if (index >= oldLen):
+                inputs.append(outputs[index-1]) 
             xs[index] = np.array(inputs[index])
             hs[index] = np.tanh( np.dot(self.wih, xs[index]) + np.dot(self.whh, hs[index-1]) + self.bh)
             outputs[index] = np.dot(self.who, hs[index]) + self.by
-            if (index >= oldLen):
-                inputs.append(outputs[-1])        
+                   
             
-        return outputs[5:]
+        return [ outputs[i] for i in range(5,15)]
     
     def forward(self, inputs, hprev):
         xs, hs, outputs = {}, {}, {}
@@ -43,15 +46,9 @@ class rnn(object):
         hs[-1] = hprev
         for index in range(len(inputs)):
             xs[index] = np.array(inputs[index])
-            print( "xs====================")
-            print( xs[index].shape )
             hs[index] = np.tanh( np.dot(self.wih, xs[index]) + np.dot(self.whh, hs[index-1]) + self.bh)
-            print("hs==================")
-            print( hs[index].shape )
             outputs[index] = np.dot(self.who, hs[index]) + self.by 
-            print( "output ===============")
-            print( outputs[index].shape )
-            
+
         return xs, hs, outputs
 
     def backwards(self, xs, hs, outputs, targets):
@@ -95,11 +92,10 @@ class rnn(object):
         hprev = np.zeros((self.hiddenSize, 1))
         for i in range(1000):
             
-            inputs = data[p:-1]
-            targets = [np.matrix(d) for d in data[1:]]
+            inputs = data[:-1]
+            targets = data[1:]
+            hprev = np.zeros((self.hiddenSize, 1))
             xs, hs, outputs = self.forward(inputs, hprev)
-            print(outputs)
-            print(targets)
                 
             self.backwards(xs, hs, outputs, targets)
             #updateParam()  

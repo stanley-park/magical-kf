@@ -35,7 +35,10 @@ class KF:
         stateConvariancePredict[0][1] = 0
         stateConvariancePredict[1][0] = 0
        
-        d = np.dot( self.convertC, past_points[-1] ) + self.dataNoise
+        x_cur = past_points[-1]
+        v_cur = delta1(self.dt, past_points)
+        cur_state = np.array([[x_cur], [v_cur]])
+        d = np.dot( self.convertC, cur_state ) + self.dataNoise
        
         temp = np.dot(stateConvariancePredict, self.convertH.T)
         gain = temp/( np.dot( self.convertH, temp) + self.dataError )
@@ -51,5 +54,5 @@ class KF:
             estB = np.array( [[(i*self.dt)**2/2],[i*self.dt]] ) # B
             futurePoints.append( np.dot( estA, self.estimate ) + np.dot( estB, acceleration ) )
             print()
-            print( futurePoints[-1])
+            print(futurePoints[-1])
         return futurePoints

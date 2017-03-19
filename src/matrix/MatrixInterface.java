@@ -1,3 +1,5 @@
+package matrix;
+
 public interface MatrixInterface {
 	// boolean modify means function returns the modified matrix
 	// no boolean modify means function returns a new matrix

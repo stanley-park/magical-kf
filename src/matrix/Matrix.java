@@ -1,3 +1,5 @@
+package matrix;
+
 public class Matrix implements MatrixInterface {
 
 	int rows;
@@ -18,8 +20,8 @@ public class Matrix implements MatrixInterface {
 		this.columns = columns;
 	}
 
-	public static void matrixChecker(Matrix toCompare) {
-		if (this.rows != m.rows && this.columns != m.columns) {
+	public void matrixChecker(Matrix toCompare) {
+		if (this.rows != toCompare.rows && this.columns != toCompare.columns) {
 			System.out.println("Can't perform the operation on these two matrices!");
 		}
 		return;
@@ -29,7 +31,7 @@ public class Matrix implements MatrixInterface {
 	// ----------no boolean modify means function returns a new matrix-------------
 
 	// matrix addition 
-	public static Matrix add(Matrix m) {
+	public Matrix add(Matrix m) {
 
 		matrixChecker(m);
 
@@ -44,7 +46,7 @@ public class Matrix implements MatrixInterface {
 		return newMatrix;
 	}
 
-	public static Matrix add(Matrix m, boolean modify) {
+	public Matrix add(Matrix m, boolean modify) {
 		
 		matrixChecker(m);
 
@@ -59,9 +61,9 @@ public class Matrix implements MatrixInterface {
 
 
 	// matrix scalar multiplication
-	public static Matrix sMultiply(double s) {
+	public Matrix sMultiply(double s) {
 
-		Matrix newMatrix = new Matrix(this.rows, m.columns);
+		Matrix newMatrix = new Matrix(this.rows, this.columns);
 
 		for (int i = 0; i < this.rows; i++) {
 			for (int j = 0; j < this.columns; j++) {
@@ -72,7 +74,7 @@ public class Matrix implements MatrixInterface {
 		return newMatrix;
 	}
 
-	public static Matrix sMultiply(double s, boolean modify) {
+	public Matrix sMultiply(double s, boolean modify) {
 
 		for (int i = 0; i < this.rows; i++) {
 			for (int j = 0; j < this.columns; j++) {
@@ -85,20 +87,20 @@ public class Matrix implements MatrixInterface {
 
 
 	// matrix multiplication (actual matrix multiplication)
-	public static Matrix multiply(Matrix m) {
+	public Matrix multiply(Matrix m) {
 
 		matrixChecker(m);
 
-		int sum = 0;
+		double sum = 0;
 
 		Matrix product = new Matrix(this.rows, m.columns);
 
-		for ( i = 0 ; i < this.rows; i++ ) {
-            for ( j = 0 ; j < m.columns; j++ ) {   
-               for ( k = 0 ; k < m.rows; k++ ) {
-                  sum = sum + first[i][k]*second[k][j];
+		for ( int i = 0 ; i < this.rows; i++ ) {
+            for ( int j = 0 ; j < m.columns; j++ ) {   
+               for ( int k = 0 ; k < m.rows; k++ ) {
+                  sum = sum + this.matrix[i][k]*m.matrix[k][j];
                }
-               multiply[i][j] = sum;
+               product.edit()[i][j] = sum;
                sum = 0;
             }
          }
@@ -106,16 +108,16 @@ public class Matrix implements MatrixInterface {
          return product;
 	}
 
-	public static Matrix multiply(Matrix m, boolean modify) {
+	public Matrix multiply(Matrix m, boolean modify) {
 
 		matrixChecker(m);
 
-		int sum = 0;
+		double sum = 0;
 
-		for ( i = 0 ; i < this.rows; i++ ) {
-            for ( j = 0 ; j < m.columns; j++ ) {   
-               for ( k = 0 ; k < m.rows; k++ ) {
-                  sum = sum + first[i][k]*second[k][j];
+		for ( int i = 0 ; i < this.rows; i++ ) {
+            for ( int j = 0 ; j < m.columns; j++ ) {   
+               for ( int k = 0 ; k < m.rows; k++ ) {
+                  sum = sum + this.matrix[i][k]*m.matrix[k][j];
                }
                this.matrix[i][j] = sum;
                sum = 0;
@@ -146,7 +148,7 @@ public class Matrix implements MatrixInterface {
 
 	}
 
-	public static Matrix divide(Matrix m, boolean modify) {
+	public Matrix divide(Matrix m, boolean modify) {
 
 		matrixChecker(m);
 
@@ -165,7 +167,7 @@ public class Matrix implements MatrixInterface {
 	
 
 	// transpose matrix 
-	public static Matrix transpose() {
+	public Matrix transpose() {
 
 		Matrix newMatrix = new Matrix(this.rows, this.columns);
 
@@ -179,7 +181,7 @@ public class Matrix implements MatrixInterface {
 
 	}
 
-	public static Matrix transpose(boolean modify) {
+	public Matrix transpose(boolean modify) {
 
 		Matrix newMatrix = new Matrix(this.rows, this.columns);
 
@@ -200,7 +202,7 @@ public class Matrix implements MatrixInterface {
 
 
 	// change element in matrix
-	public static double[][] edit() {
+	public double[][] edit() {
 		return this.matrix;
 	}
 }

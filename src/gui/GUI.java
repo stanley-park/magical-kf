@@ -16,7 +16,7 @@ import javax.swing.JPanel;
 public class GUI extends JPanel{
 	
 	//ratio to increase window size
-	private final static int RATIO = 2;
+	private final static int RATIO = 1;
 	
 	//variables for Window
 	private final static int HEIGHT = 700*RATIO;

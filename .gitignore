@@ -2,3 +2,7 @@ src/.idea
 src/gui/.idea
 src/gui/GUI.class
 /bin/
+__pycache__
+*.iml
+.idea
+out

@@ -1,5 +1,5 @@
 import numpy as np
-from delta import delta1, delta2
+from delta import *
 
 class KF:
 
@@ -30,7 +30,7 @@ class KF:
     def predict(self, past_points):
         jerk = np.array([[delta3(self.dt, past_points)]])
 
-        estimatePredict = np.dot( self.convertA, self.estimate ) + np.dot( self.convertB, acceleration ) + self.estimatePredictNoise
+        estimatePredict = np.dot( self.convertA, self.estimate ) + np.dot( self.convertB, jerk ) + self.estimatePredictNoise
 
         temp2 = np.dot( self.convertA, np.dot( self.stateCovariance, self.convertA.T )) + self.stateCovarianceNoise
         stateConvariancePredict = [[0, 0, 0] for i in range(3)]
@@ -57,9 +57,9 @@ class KF:
         # Do prediction stuff
         futurePoints = []
         for i in range(100):
-            estA = np.array( [[1, i*self.dt],[0, 1]] ) # A
-            estB = np.array( [[(i*self.dt)**2/2],[i*self.dt]] ) # B
-            futurePoints.append( np.dot( estA, self.estimate ) + np.dot( estB, acceleration ) )
+            estA = np.array( [[1, i*self.dt, (i*self.dt)**2/2],[0, 1, i*self.dt], [0,0,1]] ) # A
+            estB = np.array( [[(i*self.dt)**3/6], [(i*self.dt)**2/2],[i*self.dt]] ) # B
+            futurePoints.append( np.dot( estA, self.estimate ) + np.dot( estB, jerk ) )
         print(futurePoints[-1])    
 
 

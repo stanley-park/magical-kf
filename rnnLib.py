@@ -42,7 +42,7 @@ class rnn(object):
         
         hs[-1] = hprev
         for index in range(len(inputs)):
-            xs[index] = np.matrix(inputs[index])
+            xs[index] = np.array(inputs[index])
             print( "xs====================")
             print( xs[index].shape )
             hs[index] = np.tanh( np.dot(self.wih, xs[index]) + np.dot(self.whh, hs[index-1]) + self.bh)

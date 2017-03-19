@@ -6,7 +6,7 @@ predy = rnn()
 
 soc = socket.socket()
 serverName = 'localhost'
-port = 11311
+port = 12322
 
 soc.connect((serverName, port))
 
@@ -19,7 +19,8 @@ while True:
 
 	pairs = message.decode("utf-8").split(";")
 	print(pairs)
-	data = []
+	x = []
+	y = []
 	for pair in pairs:
 		points = pair.split(",")
 		x.append(float(points[0]))
@@ -32,8 +33,8 @@ while True:
 	py = predy.long_predict(y)
 
 	outputString = ""
-	for pair in :
-		outputString = outputString + str(pair[0]) + "," + str(pair[1]) + ";" 
+	for x,y in zip(px,py):
+		outputString = outputString + str(x) + "," + str(y) + ";" 
 	outputString = outputString + "\n"
-
+	print(outputString)
 	soc.send(outputString).encode()

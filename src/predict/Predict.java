@@ -9,7 +9,7 @@ import socket.RNNternet;
 
 public class Predict {
 
-	private static final int PAST_LENGTH = 5; 
+	private static final int PAST_LENGTH = 10; 
 	private static LinkedList<Point> Past = new LinkedList<Point>();		
 	
 	public static void main(String[] args){

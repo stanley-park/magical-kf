@@ -17,7 +17,7 @@ public class Function {
 	}
 	
 	private static double getY(double time){
-		return 100*Math.sin(time/10);
+		return 100*Math.sin(time/10) + 50*Math.sin(time/3);
 	}
 	
 	private static double getX(double time){

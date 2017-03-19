@@ -6,7 +6,7 @@ predy = KF()
 
 soc = socket.socket()
 serverName = 'localhost'
-port = 12321
+port = 12322
 
 soc.connect((serverName, port))
 

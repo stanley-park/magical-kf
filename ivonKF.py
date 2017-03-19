@@ -52,7 +52,7 @@ class KF:
 
         # Do prediction stuff
         futurePoints = []
-        for i in range(10):
+        for i in range(100):
             estA = np.array( [[1, i*self.dt],[0, 1]] ) # A
             estB = np.array( [[(i*self.dt)**2/2],[i*self.dt]] ) # B
             futurePoints.append( np.dot( estA, self.estimate ) + np.dot( estB, acceleration ) )

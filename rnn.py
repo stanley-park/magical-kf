@@ -32,7 +32,7 @@ while True:
 	py = predy.long_predict(y)
 
 	outputString = ""
-	for pair in prediction:
+	for pair in :
 		outputString = outputString + str(pair[0]) + "," + str(pair[1]) + ";" 
 	outputString = outputString + "\n"
 

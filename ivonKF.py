@@ -15,7 +15,7 @@ class KF:
         self.estimate = np.array([[x0], [v0], [a0], [j0]]) # x
         self.stateCovariance = np.array( [[0.5, 1e-9, 1e-9, 1e-9], [1e-9, 0.5, 1e-9, 1e-9], [1e-9, 1e-9, 0.5, 1e-9], [1e-9,1e-9,1e-9,0.5]] ) # p
 
-        self.stateCovarianceNoise = np.array( [[0.1, 0, 0, 0], [0, 0.1, 0, 0], [0, 0, 0.1, 0], [0, 0, 0, 0.1]] ) # q
+        self.stateCovarianceNoise = np.array( [[10, 0, 0, 0], [0, 10, 0, 0], [0, 0, 10, 0], [0, 0, 0, 10]] ) # q
         self.estimatePredictNoise = np.array( [[0], [0], [0], [0]] ) # w
         self.dataNoise = np.array( [[0], [0], [0], [0]] ) # z
 

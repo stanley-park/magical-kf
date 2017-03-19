@@ -20,6 +20,7 @@ while True:
 	pairs = message.decode("utf-8").split(";")
 	print(pairs)
 	x = []
+	y = []
 	for pair in pairs:
 		points = pair.split(",")
 		x.append(float(points[0]))
@@ -32,5 +33,5 @@ while True:
 	for x,y in zip(px,py):
 		outputString = outputString + str(x) + "," + str(y) + ";" 
 	outputString = outputString + "\n"
-
-	soc.send(outputString).encode()
+	print(outputString)
+	soc.send(outputString.encode("ascii"))

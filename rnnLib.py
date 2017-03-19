@@ -2,9 +2,9 @@ import numpy as np
 
 class rnn(object):
     def __init__(self):
-        self.inputSize = 2
+        self.inputSize = 1
         self.hiddenSize = 64
-        self.outputSize = 2
+        self.outputSize = 1
         self.learningRate = 1e-1
         
         #model parameters
@@ -35,16 +35,22 @@ class rnn(object):
             if (index >= oldLen):
                 inputs.append(outputs[-1])        
             
-        return outputs
+        return outputs[5:]
     
     def forward(self, inputs, hprev):
         xs, hs, outputs = {}, {}, {}
         
         hs[-1] = hprev
         for index in range(len(inputs)):
-            xs[index] = np.array(inputs[index])
+            xs[index] = np.matrix(inputs[index])
+            print( "xs====================")
+            print( xs[index].shape )
             hs[index] = np.tanh( np.dot(self.wih, xs[index]) + np.dot(self.whh, hs[index-1]) + self.bh)
+            print("hs==================")
+            print( hs[index].shape )
             outputs[index] = np.dot(self.who, hs[index]) + self.by 
+            print( "output ===============")
+            print( outputs[index].shape )
             
         return xs, hs, outputs
 
@@ -62,7 +68,7 @@ class rnn(object):
             dby += dy
             
             dh = np.dot(self.who.T, dy) + dhnext
-            dhraw = dh*(1-hs[index]*hs[index]) 
+            dhraw = np.multiply(dh, (1-np.multiply(hs[index],hs[index])))
             #dhraw *= dh # usinging a divide instead of a multiplier right here
             
             dbh += dhraw
@@ -88,21 +94,12 @@ class rnn(object):
         p = 0
         hprev = np.zeros((self.hiddenSize, 1))
         for i in range(1000):
-            if p + 6 > len(data)-1:
-                p = 0
-                hprev = np.zeros((self.hiddenSize, 1))
             
-            inputs = data[p:p+5]
-            targets = data[p+1: p+6]
+            inputs = data[p:-1]
+            targets = [np.matrix(d) for d in data[1:]]
             xs, hs, outputs = self.forward(inputs, hprev)
-            hprev = np.copy(hs[1])
-            
-            #if i%1000 == 0:
-            #    loss = 0
-            #    for x in range(len(outputs)):
-            #        loss +=  (outputs[x] - targets[x])**2
-            #    print("loss", loss**0.5)
-            #    print(outputs)
+            print(outputs)
+            print(targets)
                 
             self.backwards(xs, hs, outputs, targets)
             #updateParam()  

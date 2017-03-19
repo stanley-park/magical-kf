@@ -22,7 +22,7 @@ import predict.Function;
 public class GUI extends JPanel{
 	
 	//ratio to increase window size
-	private final static int RATIO = 2;
+	private final static int RATIO = 1;
 	
 	//variables for Window
 	private final static int HEIGHT = 700*RATIO;
@@ -81,14 +81,14 @@ public class GUI extends JPanel{
 	private void drawTicks(Graphics g) {
 		// TODO Auto-generated method stub	
 		g.setColor(TICK_COLOR);
-		for(int i = 0; i < TICK_LENGTH; ++i){
+		for(int i = 1; i < TICK_LENGTH; ++i){
 			int x = (int) QUEUE.get(i).getX();
 			int y = (int) QUEUE.get(i).getY();
 			int px = x - (int) DOT.getX();
 			int py = y - (int) DOT.getY();
 			
-			g.fillOval(px + W_MIDDLE - TICK_DIAMETER,
-					py + H_MIDDLE - TICK_DIAMETER,
+			g.fillOval(px + W_MIDDLE + (CIRCLE_RADIUS/2) - TICK_DIAMETER,
+					py + H_MIDDLE + (CIRCLE_RADIUS/2) - TICK_DIAMETER,
 					TICK_DIAMETER,
 					TICK_DIAMETER);
 		}

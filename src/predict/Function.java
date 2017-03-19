@@ -10,7 +10,7 @@ public class Function {
 		double dx = x-getX(time-0.01);
 		double dy = y-getY(time-0.01);
 		
-		Point p = new Point((int)x,(int)(y));
+		Point p = new Point((int)(x),(int)(y));
 		double o = Math.atan2(dy,dx);
 		
 		return new Pose(p, -o);

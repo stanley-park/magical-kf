@@ -17,7 +17,7 @@ public class Predict {
 		double time = 0;
 		
 		for( int i = 0; i <PAST_LENGTH; ++i){
-			Past.push( Function.function(++time).p );
+			Past.add( Function.function(++time).p );
 		}
 		
 		PredictionNode rnn = new RNNternet();
@@ -27,7 +27,7 @@ public class Predict {
 			
 			while(true){
 				Pose p = Function.function(++time);
-				Past.removeLast();
+				Past.removeFirst();
 				Past.add(p.p);
 				
 				ArrayList<Point> prediction = rnn.predict(Past);

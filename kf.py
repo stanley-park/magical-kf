@@ -6,7 +6,7 @@ predy = KF()
 
 soc = socket.socket()
 serverName = 'localhost'
-port = 11311
+port = 12321
 
 soc.connect((serverName, port))
 
@@ -18,7 +18,7 @@ while True:
 	print( message )
 
 	pairs = message.decode("utf-8").split(";")
-	print(pairs)
+	
 	x = []
 	y = []
 	for pair in pairs:
@@ -31,7 +31,7 @@ while True:
 
 	outputString = ""
 	for x,y in zip(px,py):
-		outputString = outputString + str(x) + "," + str(y) + ";" 
+		outputString = outputString + str(x[0][0]) + "," + str(y[0][0]) + ";" 
+
 	outputString = outputString + "\n"
-	print(outputString)
 	soc.send(outputString.encode("ascii"))

@@ -15,7 +15,7 @@ import predict.PredictionNode;
 
 public class RNNternet implements PredictionNode{
 	
-	private final static int PORT = 11311;
+	private final static int PORT = 12321;
 	private ServerSocket soc;
 	private DataOutputStream out;
 	private BufferedReader in;

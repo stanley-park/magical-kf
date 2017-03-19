@@ -62,7 +62,7 @@ public class RNNternet implements PredictionNode{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(plsRead);
+		//System.out.println(plsRead);
 		
 		for( String pair : plsRead.split(";")){
 			String[] nums = pair.split(",");

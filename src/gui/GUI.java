@@ -38,6 +38,9 @@ public class GUI extends JPanel{
 	private final static int FOOTPRINT_LENGTH = 500;
 	private final static Color PREDICTION_COLOR = Color.red;
 	private final static Color LEGEND_COLOR = Color.white;
+	private final static Color TICK_COLOR = Color.blue;
+	private final static int TICK_LENGTH = 5;
+	private final static int TICK_DIAMETER = 16;
 	
 	// update variables
 	private static LinkedList<Point> QUEUE = new LinkedList<Point>();
@@ -67,15 +70,26 @@ public class GUI extends JPanel{
 		FontMetrics metr = getFontMetrics(font);
 
 		//set message
-		String s = "Setting X: 10*time + [7]*sin(time/[8]) + [9]*cos(time/[0])";
-		String s1 = "Setting Y: 10*time + [2]*sin(time/[3]) + [4]*cos(time/[5])";
+		String s = "Setting X: " + Function.constArr[1] + "*sin(time/" + Function.constArr[2] + ") +"
+				+ Function.constArr[3] + "*cos(time/" + Function.constArr[4]  + ")";
 
 		g.drawString(s, 10, HEIGHT - font.getSize()*4);
-		g.drawString(s1, 10, HEIGHT - font.getSize()*2);
 	}
 
 	private void drawTicks(Graphics g) {
 		// TODO Auto-generated method stub	
+		g.setColor(TICK_COLOR);
+		for(int i = 1; i < TICK_LENGTH; ++i){
+			int x = (int) QUEUE.get(i).getX();
+			int y = (int) QUEUE.get(i).getY();
+			int px = x - (int) DOT.getX();
+			int py = y - (int) DOT.getY();
+			
+			g.fillOval(px + W_MIDDLE + (CIRCLE_RADIUS/2) - TICK_DIAMETER,
+					py + H_MIDDLE + (CIRCLE_RADIUS/2) - TICK_DIAMETER,
+					TICK_DIAMETER,
+					TICK_DIAMETER);
+		}
 	}
 
 	private void drawPrediction(Graphics g) {
@@ -170,44 +184,28 @@ public class GUI extends JPanel{
 
             int key = e.getKeyCode();
 
-            if (key == KeyEvent.VK_2) {
-                index = 1;
+            if(key == KeyEvent.VK_1){
+            	index = 1;
             }
-
-            if (key == KeyEvent.VK_3) {
+             
+            if (key == KeyEvent.VK_2) {
                 index = 2;
             }
 
-            if (key == KeyEvent.VK_4) {
+            if (key == KeyEvent.VK_3) {
                 index = 3;
             }
 
-            if (key == KeyEvent.VK_5) {
+            if (key == KeyEvent.VK_4) {
                 index = 4;
             }
 
-            if (key == KeyEvent.VK_7) {
-                index = 6;
-            }
-
-            if (key == KeyEvent.VK_8) {
-                index = 7;
-            }
-
-            if (key == KeyEvent.VK_9) {
-                index = 8;
-            }
-
-            if (key == KeyEvent.VK_0) {
-                index = 9;
-            }
-
             if (key == KeyEvent.VK_LEFT) {
-                Function.update(index, -10);
+                Function.update(index, -5);
             }
 
             if (key == KeyEvent.VK_RIGHT) {
-                Function.update(index, 10);
+                Function.update(index, 5);
             }
 
             if (key == KeyEvent.VK_DOWN) {
